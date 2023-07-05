@@ -1,6 +1,8 @@
 package com.autocasting;
 
 import com.google.inject.Inject;
+import javax.inject.Singleton;
+
 import net.runelite.client.ui.overlay.OverlayPanel;
 import net.runelite.client.ui.overlay.components.*;
 import net.runelite.client.ui.overlay.components.ComponentOrientation;
@@ -8,27 +10,30 @@ import net.runelite.client.ui.overlay.components.ComponentOrientation;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+@Singleton
 class AutocastingOverlay extends OverlayPanel
 {
     private int counter = 0;
     private final int SPELL_NAME_AND_ICON_GAP = 4;
 
     private final AutocastingPlugin plugin;
+    private final AutocastingState state;
     private final AutocastingConfig config;
 
     @Inject
-    AutocastingOverlay(AutocastingPlugin plugin, AutocastingConfig config)
+    AutocastingOverlay(AutocastingPlugin plugin, AutocastingConfig config, AutocastingState state)
     {
         super(plugin);
         this.plugin = plugin;
         this.config = config;
+        this.state = state;
         super.setDynamicFont(true);
     }
 
     @Override
     public Dimension render(Graphics2D graphics)
     {
-        if (!plugin.isEquippedWeaponMagic()) { return null; }
+        if (!state.isEquippedWeaponMagic()) { return null; }
         if (!config.showOverlay()) { return null; }
         else if (!config.showSpellName() && !config.showSpellIcon()) { return null; }
         else if (config.showSpellName() && config.showSpellIcon())
@@ -88,7 +93,7 @@ class AutocastingOverlay extends OverlayPanel
 
     private void flashBackground()
     {
-        if (plugin.isMagicLevelTooLowForSpell() && (++counter % config.getFlashPeriod() > config.getFlashPeriod() / 2))
+        if (state.isMagicLevelTooLowForSpell() && (++counter % config.getFlashPeriod() > config.getFlashPeriod() / 2))
         {
             panelComponent.setBackgroundColor(config.getOverlayColor());
         }
@@ -100,7 +105,7 @@ class AutocastingOverlay extends OverlayPanel
 
     private void solidBackground()
     {
-        if (plugin.isMagicLevelTooLowForSpell() && config.overlayNotificationType() == AutocastingConstants.OverlayNotificationType.SOLID)
+        if (state.isMagicLevelTooLowForSpell() && config.overlayNotificationType() == AutocastingConstants.OverlayNotificationType.SOLID)
         {
             panelComponent.setBackgroundColor(config.getOverlayColor());
         }
@@ -112,12 +117,12 @@ class AutocastingOverlay extends OverlayPanel
 
     private BufferedImage getCurrentSpellImage()
     {
-        return plugin.getImage(plugin.getCurrentAutocastSpell().getSpriteID());
+        return state.getImage(state.getCurrentAutocastSpell().getSpriteID());
     }
 
     private String getCurrentSpellName()
     {
-        return plugin.getCurrentAutocastSpell().getName();
+        return state.getCurrentAutocastSpell().getName();
     }
 
 }
