@@ -14,8 +14,18 @@ public class AutocastingMessages {
     @Inject
     private ChatMessageManager chatMessageManager;
 
+    @Inject
+    private AutocastingConfig config;
+
+    public void sendStatDrainMessage()
+    {
+        if (config.messageOnStatDrain()) {
+            sendChatMessage(AutocastingConstants.AUTOCAST_UNEQUIP_NOTIFICATION_MESSAGE);
+        }
+    }
+
     // Borrowed from DailyTasksPlugin.java
-    public void sendChatMessage(String chatMessage)
+    private void sendChatMessage(String chatMessage)
     {
         final String message = new ChatMessageBuilder()
                 .append(ChatColorType.HIGHLIGHT)

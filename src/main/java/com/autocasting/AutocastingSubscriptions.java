@@ -3,13 +3,16 @@ package com.autocasting;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Skill;
+import net.runelite.api.Varbits;
 import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.client.eventbus.Subscribe;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @Slf4j
+@Singleton
 public class AutocastingSubscriptions {
     @Inject
     private Client client;
@@ -29,10 +32,11 @@ public class AutocastingSubscriptions {
     @Subscribe
     public void onVarbitChanged(VarbitChanged event)
     {
-        if (event.getVarbitId() == AutocastingConstants.VARBIT_AUTOCAST_SPELL)
+        boolean isRelevantAutocastVarbit =
+                event.getVarbitId() == AutocastingConstants.VARBIT_AUTOCAST_SPELL
+                || event.getVarbitId() == Varbits.EQUIPPED_WEAPON_TYPE;
+        if (isRelevantAutocastVarbit)
         {
-            log.info("Autocast varbit changed");
-            log.info(event.toString());
             state.updateAutocastSpell();
             state.updateIsEquippedWeaponMagic();
         }
@@ -50,9 +54,7 @@ public class AutocastingSubscriptions {
             AutocastingSpell autocastSpell = AutocastingSpell.getAutocastingSpell(varbitValue);
             if (boostedLevel < autocastSpell.getLevelRequirement()) {
                 state.setMagicLevelTooLowForSpell(true);
-                if (config.messageOnStatDrain()) {
-                    messages.sendChatMessage(AutocastingConstants.AUTOCAST_UNEQUIP_NOTIFICATION_MESSAGE);
-                }
+                messages.sendStatDrainMessage();
             }
             else {
                 state.setMagicLevelTooLowForSpell(false);
