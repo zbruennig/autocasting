@@ -17,10 +17,34 @@ public class AutocastingMessages {
     @Inject
     private AutocastingConfig config;
 
+    @Inject
+    private AutocastingState state;
+
     public void sendStatDrainMessage()
     {
         if (config.messageOnStatDrain()) {
-            sendChatMessage(AutocastingConstants.AUTOCAST_UNEQUIP_NOTIFICATION_MESSAGE);
+            String autocastName = state.getCurrentAutocastSpell().getName();
+            String message = String.format(AutocastingConstants.STAT_DRAIN_FORMAT, autocastName);
+            sendChatMessage(message);
+        }
+    }
+
+    public void sendNoCastsMessage()
+    {
+        if (config.messageOnStatDrain()) {
+            String autocastName = state.getCurrentAutocastSpell().getName();
+            String message = String.format(AutocastingConstants.NO_CASTS_FORMAT, autocastName);
+            sendChatMessage(message);
+        }
+    }
+
+    public void sendLowCastsMessage()
+    {
+        if (config.messageOnStatDrain()) {
+            String autocastName = state.getCurrentAutocastSpell().getName();
+            String threshold = Integer.toString(config.lowCastMessageThreshold());
+            String message = String.format(AutocastingConstants.LOW_CASTS_FORMAT, threshold, autocastName);
+            sendChatMessage(message);
         }
     }
 

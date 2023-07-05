@@ -39,7 +39,8 @@ public class AutocastingState {
         // Get new autocast spell.
         AutocastingSpell newAutocastSpell = util.getAutocastSpell();
         if (newAutocastSpell == null) { return; }
-
+        // Some input (weapon change, attack style change, or autocast change) happened, so magic level must be fine now
+        setMagicLevelTooLowForSpell(false);
         // If the new spell is not null, and there is currently no autocast spell selected, update it
         if (currentAutocastSpell == null || newAutocastSpell.getVarbitValue() != currentAutocastSpell.getVarbitValue())
         {

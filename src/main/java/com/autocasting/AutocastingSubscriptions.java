@@ -24,6 +24,9 @@ public class AutocastingSubscriptions {
     private AutocastingMessages messages;
 
     @Inject
+    private AutocastingNotifications notifications;
+
+    @Inject
     private AutocastingState state;
 
     @Inject
@@ -53,8 +56,12 @@ public class AutocastingSubscriptions {
             int varbitValue = util.getAutocastVarbit();
             AutocastingSpell autocastSpell = AutocastingSpell.getAutocastingSpell(varbitValue);
             if (boostedLevel < autocastSpell.getLevelRequirement()) {
-                state.setMagicLevelTooLowForSpell(true);
-                messages.sendStatDrainMessage();
+                if (state.isMagicLevelTooLowForSpell()) {
+                    // We don't need to send new messages or update state if it didn't actually change
+                    state.setMagicLevelTooLowForSpell(true);
+                    messages.sendStatDrainMessage();
+                    notifications.notifyStatDrain();
+                }
             }
             else {
                 state.setMagicLevelTooLowForSpell(false);

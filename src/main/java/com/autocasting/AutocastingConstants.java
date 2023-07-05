@@ -19,10 +19,12 @@ public final class AutocastingConstants {
     public static final int VARBIT_AUTOCAST_SPELL = 276;
 
     // Message constants
-    public static final String AUTOCAST_UNEQUIP_NOTIFICATION_MESSAGE = "Your magic level has dropped below what is required to autocast your spell.";
+    public static final String STAT_DRAIN_FORMAT = "Your Magic level has dropped too low to autocast %s!";
+    public static final String NO_CASTS_FORMAT = "Out of runes to autocast %s!";
+    public static final String LOW_CASTS_FORMAT = "Less than %s casts of %s remaining.";
 
     @AllArgsConstructor
-    public static enum OverlayNotificationType
+    public enum OverlayNotificationType
     {
         FLASH("Flash"),
         SOLID("Solid"),

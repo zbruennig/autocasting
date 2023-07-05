@@ -81,7 +81,7 @@ class AutocastingOverlay extends OverlayPanel
 
     private void configureBackground()
     {
-        if (config.overlayNotificationType() == AutocastingConstants.OverlayNotificationType.FLASH)
+        if (config.overlayAlertStyle() == AutocastingConstants.OverlayNotificationType.FLASH)
         {
             flashBackground();
         }
@@ -95,7 +95,7 @@ class AutocastingOverlay extends OverlayPanel
     {
         if (state.isMagicLevelTooLowForSpell() && (++counter % config.getFlashPeriod() > config.getFlashPeriod() / 2))
         {
-            panelComponent.setBackgroundColor(config.getOverlayColor());
+            panelComponent.setBackgroundColor(config.overlayAlertColor());
         }
         else
         {
@@ -105,9 +105,9 @@ class AutocastingOverlay extends OverlayPanel
 
     private void solidBackground()
     {
-        if (state.isMagicLevelTooLowForSpell() && config.overlayNotificationType() == AutocastingConstants.OverlayNotificationType.SOLID)
+        if (state.isMagicLevelTooLowForSpell() && config.overlayAlertStyle() == AutocastingConstants.OverlayNotificationType.SOLID)
         {
-            panelComponent.setBackgroundColor(config.getOverlayColor());
+            panelComponent.setBackgroundColor(config.overlayAlertColor());
         }
         else
         {

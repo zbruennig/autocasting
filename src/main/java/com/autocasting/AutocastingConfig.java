@@ -43,19 +43,10 @@ public interface AutocastingConfig extends Config
 	default boolean showOverlayOutsideCombat() { return true; }
 
 	@ConfigItem(
-			keyName = "overlayNotificationType",
-			name = "Overlay Notification Type",
-			description = "Configures how overlay behaves when magic level low.",
-			position = 3,
-			section = overlaySettings
-	)
-	default AutocastingConstants.OverlayNotificationType overlayNotificationType() { return AutocastingConstants.OverlayNotificationType.FLASH; }
-
-	@ConfigItem(
 			keyName = "showSpellName",
 			name = "Show Spell Name",
 			description = "Show/hide spell name",
-			position = 4,
+			position = 3,
 			section = overlaySettings
 	)
 	default boolean showSpellName()
@@ -67,26 +58,36 @@ public interface AutocastingConfig extends Config
 			keyName = "showSpellIcon",
 			name = "Show Spell Icon",
 			description = "Show/hide spell icon",
-			position = 5,
+			position = 4,
 			section = overlaySettings
 	)
 	default boolean showSpellIcon() { return true; }
 
+	@ConfigItem(
+			keyName = "overlayAlertStyle",
+			name = "Overlay Alert Style",
+			description = "Configures how the overlay behaves when the autocast is unusable.",
+			position = 5,
+			section = overlaySettings
+	)
+	default AutocastingConstants.OverlayNotificationType overlayAlertStyle() { return AutocastingConstants.OverlayNotificationType.FLASH; }
+
+
 	@Alpha
 	@ConfigItem(
-			keyName = "overlayFlashColor",
-			name = "Overlay Flash Color",
+			keyName = "overlayAlertColor",
+			name = "Overlay Alert Color",
 			description = "Color of Autocast overlay when flashing/solid",
 			position = 6,
 			section = overlaySettings
 	)
-	default Color getOverlayColor() { return AutocastingConstants.RED_FLASH_COLOR; }
+	default Color overlayAlertColor() { return AutocastingConstants.RED_FLASH_COLOR; }
 
 	@Range(min = AutocastingConstants.MINIMUM_COUNTER_FLASH_PERIOD)
 	@ConfigItem(
 			keyName = "flashPeriod",
 			name = "Overlay Flash Period",
-			description = "Period at which the Autocast overlay flashes. Higher # equals slower flash. Lowest # allowed is 1.",
+			description = "Period (in frames) at which the Autocast overlay flashes. Lower numbers flicker faster.",
 			position = 7,
 			section = overlaySettings
 	)
@@ -107,7 +108,7 @@ public interface AutocastingConfig extends Config
 	@Range(min = AutocastingConstants.MINIMUM_CAST_RUNES_THRESHOLD, max = AutocastingConstants.MAXIMUM_CAST_RUNES_THRESHOLD)
 	@ConfigItem(
 			keyName = "castRemainingThreshold",
-			name = "Casts Remaining Threshold",
+			name = "Low Cast Threshold",
 			description = "Max amount of remaining casts which will be displayed. (1-99,999)",
 			position = 9,
 			section = overlaySettings
@@ -121,7 +122,7 @@ public interface AutocastingConfig extends Config
 	)
 	String messageSettings = "messages";
 
-	// MESSAGES
+	// CHAT MESSAGES
 
 	@ConfigItem(
 			keyName = "messageOnStatDrain",
@@ -144,7 +145,7 @@ public interface AutocastingConfig extends Config
 	@ConfigItem(
 			keyName = "lowCastMessageThreshold",
 			name = "Low Cast Threshold",
-			description = "Amount of casts to notify you on, based on your current runes.",
+			description = "Amount of casts to message you on, based on your current runes.",
 			position = 13,
 			section = messageSettings
 	)
