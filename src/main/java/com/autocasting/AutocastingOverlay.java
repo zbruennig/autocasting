@@ -11,9 +11,6 @@ import java.awt.image.BufferedImage;
 class AutocastingOverlay extends OverlayPanel
 {
     private int counter = 0;
-    public static final int DEFAULT_COUNTER_FLASH_PERIOD = 40;
-    public static final int MINIMUM_COUNTER_FLASH_PERIOD = 1;
-    public static final Color RED_FLASH_COLOR = new Color(140, 55, 0, 255);
     private final int SPELL_NAME_AND_ICON_GAP = 4;
 
     private final AutocastingPlugin plugin;
@@ -79,7 +76,7 @@ class AutocastingOverlay extends OverlayPanel
 
     private void configureBackground()
     {
-        if (config.overlayNotificationType() == AutocastingConfig.OverlayNotificationType.FLASH)
+        if (config.overlayNotificationType() == AutocastingConstants.OverlayNotificationType.FLASH)
         {
             flashBackground();
         }
@@ -103,7 +100,7 @@ class AutocastingOverlay extends OverlayPanel
 
     private void solidBackground()
     {
-        if (plugin.isMagicLevelTooLowForSpell() && config.overlayNotificationType() == AutocastingConfig.OverlayNotificationType.SOLID)
+        if (plugin.isMagicLevelTooLowForSpell() && config.overlayNotificationType() == AutocastingConstants.OverlayNotificationType.SOLID)
         {
             panelComponent.setBackgroundColor(config.getOverlayColor());
         }

@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import net.runelite.api.*;
-import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.client.callback.ClientThread;
@@ -57,7 +56,7 @@ public class AutocastingPlugin extends Plugin
 
 	private static final String AUTOCAST_UNEQUIP_NOTIFICATION_MESSAGE = "Your magic level has dropped below what is required to autocast your spell.";
 
-	private static final int VARBIT_AUTOCAST_SPELL = (276);
+	private static final int VARBIT_AUTOCAST_SPELL = 276;
 
 
 	@Inject
@@ -105,26 +104,29 @@ public class AutocastingPlugin extends Plugin
 	@Subscribe
 	public void onVarbitChanged(VarbitChanged event)
 	{
-		updateAutocastSpell();
-		updateIsEquippedWeaponMagic();
+		if (event.getVarbitId() == VARBIT_AUTOCAST_SPELL)
+		{
+			log.info("Varbit changed");
+			log.info(event.toString());
+			updateAutocastSpell();
+			updateIsEquippedWeaponMagic();
+		}
 	}
 
 	@Subscribe
 	public void onStatChanged(StatChanged event)
 	{
-
-		Skill skill = event.getSkill();
-		int boostedLevel = event.getBoostedLevel();
-
-		if (skill.getName().equals(Skill.MAGIC.getName()))
+		if (event.getSkill().getName().equals(Skill.MAGIC.getName()))
 		{
+			log.info(event.toString());
+			int boostedLevel = event.getBoostedLevel();
 			// Now need to check if new boostedLevel is still high enough for the autocast spell
 			int varbitValue = client.getVarbitValue(VARBIT_AUTOCAST_SPELL);
 			AutocastingSpell autocastSpell = AutocastingSpell.getAutocastingSpell(varbitValue);
 			if (boostedLevel < autocastSpell.getLevelRequirement())
 			{
 				magicLevelTooLowForSpell = true;
-				if (config.sendGameMessage()) { sendChatMessage(AUTOCAST_UNEQUIP_NOTIFICATION_MESSAGE); }
+				if (config.messageOnStatDrain()) { sendChatMessage(AUTOCAST_UNEQUIP_NOTIFICATION_MESSAGE); }
 			}
 			else
 			{
@@ -139,21 +141,8 @@ public class AutocastingPlugin extends Plugin
 		if (newAutocastSpell == null) { return; }
 
 		// If the new spell is not null, and there is currently no autocast spell selected, update it
-		// TODO: The following if else tree can be mostly replaced with "currentAutocastSpell = newAutocastSpell;" for all cases, but
-		// 		but I'm not sure how expensive that can add up to be with varbits changing all the time. Maybe it's better
-		// 		than checking these conditions every time, I dont know. Someone with more knowledge, please let me know.
-		if (currentAutocastSpell == null)
+		if (currentAutocastSpell == null || newAutocastSpell.getVarbitValue() != currentAutocastSpell.getVarbitValue())
 		{
-			currentAutocastSpell = newAutocastSpell;
-		}
-		else if (newAutocastSpell.getVarbitValue() == currentAutocastSpell.getVarbitValue())
-		{
-			// No change to autocast spell
-			return;
-		}
-		else
-		{
-			// Otherwise, update the spell.
 			currentAutocastSpell = newAutocastSpell;
 		}
 	}
@@ -177,7 +166,6 @@ public class AutocastingPlugin extends Plugin
 	{
 		// Get new autocast spell.
 		int varbitValue = client.getVarbitValue(VARBIT_AUTOCAST_SPELL);
-//		log.info("Autocast varbit value: " + varbitValue);
 		return AutocastingSpell.getAutocastingSpell(varbitValue);
 	}
 
@@ -199,16 +187,6 @@ public class AutocastingPlugin extends Plugin
 	public BufferedImage getImage(int spriteID)
 	{
 		return spriteManager.getSprite(spriteID, 0);
-	}
-
-
-	@Subscribe
-	public void onGameStateChanged(GameStateChanged gameStateChanged)
-	{  // TODO remove this
-		if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
-		{
-			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Autocasting says " + config.greeting(), null);
-		}
 	}
 
 	@Provides
