@@ -1,6 +1,6 @@
 package com.autocasting;
 
-import lombok.extern.slf4j.Slf4j;
+import com.autocasting.datatypes.Spell;
 import net.runelite.api.Client;
 import net.runelite.api.Skill;
 import net.runelite.api.Varbits;
@@ -12,7 +12,6 @@ import net.runelite.client.eventbus.Subscribe;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-@Slf4j
 @Singleton
 public class AutocastingSubscriptions {
     @Inject
@@ -50,12 +49,11 @@ public class AutocastingSubscriptions {
     public void onStatChanged(StatChanged event)
     {
         if (event.getSkill().getName().equals(Skill.MAGIC.getName())) {
-            log.info(event.toString());
-            int boostedLevel = event.getBoostedLevel();
-
             // Now need to check if new boostedLevel is still high enough for the autocast spell
+            int boostedLevel = event.getBoostedLevel();
             int varbitValue = util.getAutocastVarbit();
-            AutocastingSpell autocastSpell = AutocastingSpell.getAutocastingSpell(varbitValue);
+            Spell autocastSpell = Spell.getSpell(varbitValue);
+
             if (boostedLevel < autocastSpell.getLevelRequirement()) {
                 if (state.isMagicLevelTooLowForSpell()) {
                     // We don't need to send new messages or update state if it didn't actually change

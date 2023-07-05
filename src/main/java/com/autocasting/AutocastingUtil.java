@@ -1,5 +1,6 @@
 package com.autocasting;
 
+import com.autocasting.datatypes.Spell;
 import net.runelite.api.Actor;
 import net.runelite.api.Client;
 import net.runelite.api.NPC;
@@ -18,9 +19,9 @@ public class AutocastingUtil {
         return client.getVarbitValue(AutocastingConstants.VARBIT_AUTOCAST_SPELL);
     }
 
-    public AutocastingSpell getAutocastSpell() {
+    public Spell getAutocastSpell() {
         int varbitValue = getAutocastVarbit();
-        return AutocastingSpell.getAutocastingSpell(varbitValue);
+        return Spell.getSpell(varbitValue);
     }
 
     public int getWeaponTypeId() {
@@ -30,6 +31,7 @@ public class AutocastingUtil {
     // Based off StatusBarsPlugin.java
     public boolean computeIsInCombat()
     {
+        // TODO some leniency for combat drops, 1 or 2 ticks or so?
         final Player localPlayer = client.getLocalPlayer();
         if (localPlayer == null)
         {

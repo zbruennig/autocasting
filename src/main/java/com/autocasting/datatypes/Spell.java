@@ -1,4 +1,4 @@
-package com.autocasting;
+package com.autocasting.datatypes;
 
 import com.google.common.collect.ImmutableMap;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Getter
-enum AutocastingSpell
+public enum Spell
 {
     /**
      * The currently selected autocast spell.
@@ -87,7 +87,7 @@ enum AutocastingSpell
     BLOOD_BARRAGE("Blood Barrage", SpriteID.SPELL_BLOOD_BARRAGE, 92, 45),
     ICE_BARRAGE("Ice Barrage", SpriteID.SPELL_ICE_BARRAGE, 94, 46),
 
-    IBANS_BLAST("Iban's Blast", SpriteID.SPELL_IBAN_BLAST, 50, 47),
+    IBAN_BLAST("Iban's Blast", SpriteID.SPELL_IBAN_BLAST, 50, 47),
 
     WIND_SURGE("Wind Surge", SpriteID.SPELL_WIND_SURGE, 81, 48),
     WATER_SURGE("Water Surge", SpriteID.SPELL_WATER_SURGE, 85, 49),
@@ -116,13 +116,13 @@ enum AutocastingSpell
     @Getter
     private final int varbitValue;
 
-    private static final Map<Integer, AutocastingSpell> AUTOCAST_SPELLS_MAP;
+    private static final Map<Integer, Spell> AUTOCAST_SPELLS_MAP;
 
     static
     {
-        ImmutableMap.Builder<Integer, AutocastingSpell> builder = new ImmutableMap.Builder<>();
+        ImmutableMap.Builder<Integer, Spell> builder = new ImmutableMap.Builder<>();
 
-        for (AutocastingSpell spell : values())
+        for (Spell spell : values())
         {
             builder.put(spell.getVarbitValue(), spell);
         }
@@ -130,5 +130,5 @@ enum AutocastingSpell
         AUTOCAST_SPELLS_MAP = builder.build();
     }
 
-    public static AutocastingSpell getAutocastingSpell(int varbitValue) { return AUTOCAST_SPELLS_MAP.get(varbitValue); }
+    public static Spell getSpell(int varbitValue) { return AUTOCAST_SPELLS_MAP.get(varbitValue); }
 }

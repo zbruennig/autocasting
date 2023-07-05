@@ -1,9 +1,8 @@
 package com.autocasting;
 
+import com.autocasting.datatypes.Spell;
 import com.google.inject.Provides;
 import javax.inject.Inject;
-
-import lombok.extern.slf4j.Slf4j;
 
 import net.runelite.api.*;
 import net.runelite.client.callback.ClientThread;
@@ -18,7 +17,6 @@ TODO: Add remaining spells to AutocastingSpells enum.
 TODO: Only show overlay when player is equipping a staff or other autocastable weapon.
 */
 
-@Slf4j
 @PluginDescriptor(
 		name = "Autocasting",
 		description = "Notifies client when magic level falls below required level for spell.",
@@ -73,7 +71,7 @@ public class AutocastingPlugin extends Plugin
 			state.updateAutocastSpell();
 		}
 		else {
-			state.setCurrentAutocastSpell(AutocastingSpell.NO_SPELL);
+			state.setCurrentAutocastSpell(Spell.NO_SPELL);
 		}
 	}
 

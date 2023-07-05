@@ -51,6 +51,11 @@ public class AutocastingMessages {
     // Borrowed from DailyTasksPlugin.java
     private void sendChatMessage(String chatMessage)
     {
+        boolean shouldSendMessage = state.isInCombat() || config.messageOutOfCombat();
+        if (!shouldSendMessage) {
+            return;
+        }
+
         final String message = new ChatMessageBuilder()
                 .append(ChatColorType.HIGHLIGHT)
                 .append(chatMessage)

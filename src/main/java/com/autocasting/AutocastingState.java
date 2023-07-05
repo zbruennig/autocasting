@@ -1,5 +1,6 @@
 package com.autocasting;
 
+import com.autocasting.datatypes.Spell;
 import com.autocasting.dependencies.attackstyles.WeaponType;
 
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class AutocastingState {
 
     @Getter
     @Setter
-    private AutocastingSpell currentAutocastSpell;
+    private Spell currentAutocastSpell;
 
     @Getter
     @Setter
@@ -41,7 +42,7 @@ public class AutocastingState {
 
     public void updateAutocastSpell() {
         // Get new autocast spell.
-        AutocastingSpell newAutocastSpell = util.getAutocastSpell();
+        Spell newAutocastSpell = util.getAutocastSpell();
         if (newAutocastSpell == null) { return; }
         // Some input (weapon change, attack style change, or autocast change) happened, so magic level must be fine now
         setMagicLevelTooLowForSpell(false);

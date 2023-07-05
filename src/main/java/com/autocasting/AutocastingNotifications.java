@@ -42,6 +42,8 @@ public class AutocastingNotifications {
     }
 
     private void sendNotification(String message) {
-        notifier.notify(message);
+        if (state.isInCombat() || config.notifyOutOfCombat()) {
+            notifier.notify(message);
+        }
     }
 }
