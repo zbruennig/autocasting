@@ -35,6 +35,10 @@ public class AutocastingState {
     @Setter
     private AutocastingSpell currentAutocastSpell;
 
+    @Getter
+    @Setter
+    private boolean isInCombat;
+
     public void updateAutocastSpell() {
         // Get new autocast spell.
         AutocastingSpell newAutocastSpell = util.getAutocastSpell();

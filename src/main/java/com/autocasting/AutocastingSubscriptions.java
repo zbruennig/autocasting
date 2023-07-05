@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Skill;
 import net.runelite.api.Varbits;
+import net.runelite.api.events.GameTick;
 import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.client.eventbus.Subscribe;
@@ -67,5 +68,12 @@ public class AutocastingSubscriptions {
                 state.setMagicLevelTooLowForSpell(false);
             }
         }
+    }
+
+    @Subscribe
+    public void onGameTick(GameTick gameTick)
+    {
+        // This only updates every tick, so we shouldn't be re-computing while rendering each frame
+        state.setInCombat(util.computeIsInCombat());
     }
 }
