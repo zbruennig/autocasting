@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 import java.util.Map;
 
 @RequiredArgsConstructor
+@Getter
 public enum SpellCost {
-
     WIND_STRIKE(1, new RuneTypeQuantity[] {
             new RuneTypeQuantity(RuneType.BODY, 1),
             new RuneTypeQuantity(RuneType.AIR, 1)
@@ -301,14 +301,11 @@ public enum SpellCost {
 
     static
     {
-        RuneTypeQuantity[] x = new RuneTypeQuantity[] {};
         ImmutableMap.Builder<Integer, SpellCost> builder = new ImmutableMap.Builder<>();
 
-        for (SpellCost cost : values())
-        {
+        for (SpellCost cost : values()) {
             builder.put(cost.getVarbitValue(), cost);
         }
-
         SPELL_COST_MAP = builder.build();
     }
 

@@ -40,7 +40,8 @@ public class AutocastingState {
     @Setter
     private boolean isInCombat;
 
-    public void updateAutocastSpell() {
+    public void updateAutocastSpell()
+    {
         // Get new autocast spell.
         Spell newAutocastSpell = util.getAutocastSpell();
         if (newAutocastSpell == null) { return; }
@@ -51,6 +52,16 @@ public class AutocastingState {
         {
             currentAutocastSpell = newAutocastSpell;
         }
+    }
+
+    public void updateRunes()
+    {
+
+    }
+
+    public void updateInfiniteRuneSources()
+    {
+
     }
 
 

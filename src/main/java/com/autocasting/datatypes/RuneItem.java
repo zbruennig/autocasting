@@ -105,11 +105,9 @@ public enum RuneItem {
     {
         ImmutableMap.Builder<Integer, RuneItem> builder = new ImmutableMap.Builder<>();
 
-        for (RuneItem item : values())
-        {
+        for (RuneItem item : values()) {
             builder.put(item.getId(), item);
         }
-
         RUNE_ITEM_MAP = builder.build();
     }
 

@@ -1,6 +1,7 @@
 package com.autocasting;
 
 import lombok.AllArgsConstructor;
+import net.runelite.api.Varbits;
 
 import java.awt.*;
 
@@ -17,6 +18,19 @@ public final class AutocastingConstants {
 
     // Common constants
     public static final int VARBIT_AUTOCAST_SPELL = 276;
+    public static final int VARBIT_FOUNTAIN_OF_RUNES = 4145;
+    public static final int[] VARBIT_RUNE_POUCH_RUNES  = {
+            Varbits.RUNE_POUCH_RUNE1,
+            Varbits.RUNE_POUCH_RUNE2,
+            Varbits.RUNE_POUCH_RUNE3,
+            Varbits.RUNE_POUCH_RUNE4
+    };
+    public static final int[] VARBIT_RUNE_POUCH_AMOUNTS = {
+            Varbits.RUNE_POUCH_AMOUNT1,
+            Varbits.RUNE_POUCH_AMOUNT2,
+            Varbits.RUNE_POUCH_AMOUNT3,
+            Varbits.RUNE_POUCH_AMOUNT4
+    };
 
     // Message constants
     public static final String STAT_DRAIN_FORMAT = "Your Magic level has dropped too low to autocast %s!";
