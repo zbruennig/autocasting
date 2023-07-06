@@ -296,20 +296,4 @@ public enum SpellCost {
 
     @Getter
     private final RuneTypeQuantity[] runeCost;
-
-    private static final Map<Integer, SpellCost> SPELL_COST_MAP;
-
-    static
-    {
-        ImmutableMap.Builder<Integer, SpellCost> builder = new ImmutableMap.Builder<>();
-
-        for (SpellCost cost : values()) {
-            builder.put(cost.getVarbitValue(), cost);
-        }
-        SPELL_COST_MAP = builder.build();
-    }
-
-    public static SpellCost getSpellCost(int varbitValue) {
-        return SPELL_COST_MAP.getOrDefault(varbitValue, null);
-    }
 }

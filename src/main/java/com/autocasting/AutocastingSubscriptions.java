@@ -22,9 +22,6 @@ public class AutocastingSubscriptions {
     private AutocastingConfig config;
 
     @Inject
-    private AutocastingMessages messages;
-
-    @Inject
     private AutocastingNotifications notifications;
 
     @Inject
@@ -74,7 +71,6 @@ public class AutocastingSubscriptions {
                 if (!state.isMagicLevelTooLowForSpell()) {
                     // We don't need to send new messages or update state if it didn't actually change
                     state.setMagicLevelTooLowForSpell(true);
-                    messages.sendStatDrainMessage();
                     notifications.notifyStatDrain();
                 }
             }

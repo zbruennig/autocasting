@@ -108,83 +108,28 @@ public interface AutocastingConfig extends Config
 	@Range(min = AutocastingConstants.MINIMUM_CAST_RUNES_THRESHOLD, max = AutocastingConstants.MAXIMUM_CAST_RUNES_THRESHOLD)
 	@ConfigItem(
 			keyName = "castRemainingThreshold",
-			name = "Low Cast Threshold",
+			name = "Display Cast Limit",
 			description = "Max amount of remaining casts which will be displayed. (1-999,999)",
 			position = 9,
 			section = overlaySettings
 	)
-	default int castRemainingThreshold() { return AutocastingConstants.DEFAULT_CAST_RUNES_THRESHOLD; }
+	default int displayCastLimit() { return AutocastingConstants.DEFAULT_CAST_RUNES_THRESHOLD; }
 
-	// CHAT MESSAGES
-
-	@ConfigSection(
-			name = "In-Game Messages",
-			description = "Message Settings",
-			position = 10
-	)
-	String messageSettings = "messages";
-
-	@ConfigItem(
-			keyName = "messageOutOfCombat",
-			name = "Messages Out Of Combat",
-			description = "Controls if chat warnings for autocast spells will appear outside of combat.",
-			position = 11,
-			section = messageSettings
-	)
-	default boolean messageOutOfCombat() { return true; }
-
-	@ConfigItem(
-			keyName = "messageOnStatDrain",
-			name = "Stat Drain Message",
-			description = "Sends a game message when your magic level falls below the level required for your autocast spell.",
-			position = 12,
-			section = messageSettings
-	)
-	default boolean messageOnStatDrain() { return true; }
-
-	@ConfigItem(
-			keyName = "messageOnLowCasts",
-			name = "Low Casts Remaining Message",
-			description = "Messages you when your amount of casts falls to or below the Low Cast Threshold.",
-			position = 13,
-			section = messageSettings
-	)
-	default boolean messageOnLowCasts() { return true; }
-
-	@Range(min = AutocastingConstants.MINIMUM_CAST_RUNES_THRESHOLD, max = AutocastingConstants.MAXIMUM_CAST_RUNES_THRESHOLD)
-	@ConfigItem(
-			keyName = "lowCastMessageThreshold",
-			name = "Low Cast Threshold",
-			description = "Amount of casts to message you on, based on your current runes.",
-			position = 14,
-			section = messageSettings
-	)
-	default int lowCastMessageThreshold() { return AutocastingConstants.DEFAULT_LOW_RUNES_MESSAGE_THRESHOLD; }
-
-	@ConfigItem(
-			keyName = "messageOnNoCasts",
-			name = "No Casts Remainings Message",
-			description = "Sends a game message when you run out of runes to be able to cast your autocast spell.",
-			position = 15,
-			section = messageSettings
-	)
-	default boolean messageOnNoCasts() { return true; }
 
 	// DESKTOP NOTIFICATIONS
 
 	@ConfigSection(
-			name = "Desktop Notifications",
-			description = "Notifications Settings",
-			position = 16
+			name = "Notifications",
+			description = "In-Game and Desktop Notification Settings",
+			position = 10
 	)
 	String notificationSettings = "notifications";
-
 
 	@ConfigItem(
 			keyName = "notifyOutOfCombat",
 			name = "Notify Out Of Combat",
-			description = "Controls if desktop notifications for autocast spells will appear outside of combat.",
-			position = 17,
+			description = "Controls if notifications for autocast spells will appear outside of combat.",
+			position = 11,
 			section = notificationSettings
 	)
 	default boolean notifyOutOfCombat() { return true; }
@@ -193,26 +138,26 @@ public interface AutocastingConfig extends Config
 			keyName = "notifyOnStatDrain",
 			name = "Stat Drain Notification",
 			description = "Notifies you when your magic level falls below the level required for your autocast spell.",
-			position = 18,
+			position = 12,
 			section = notificationSettings
 	)
-	default boolean notifyOnStatDrain() { return true; }
+	default AutocastingConstants.ChatNotificationType notifyOnStatDrain() { return AutocastingConstants.ChatNotificationType.BOTH; }
 
 	@ConfigItem(
 			keyName = "notifyOnLowCasts",
-			name = "Low Casts Remaining Notification",
+			name = "Low Casts Notification",
 			description = "Notifies you when your amount of casts falls to or below the Low Cast Threshold.",
-			position = 19,
+			position = 13,
 			section = notificationSettings
 	)
-	default boolean notifyOnLowCasts() { return true; }
+	default AutocastingConstants.ChatNotificationType notifyOnLowCasts() { return AutocastingConstants.ChatNotificationType.BOTH; }
 
 	@Range(min = AutocastingConstants.MINIMUM_CAST_RUNES_THRESHOLD, max = AutocastingConstants.MAXIMUM_CAST_RUNES_THRESHOLD)
 	@ConfigItem(
 			keyName = "lowCastNotificationThreshold",
 			name = "Low Cast Threshold",
 			description = "Amount of casts to notify you on, based on your current runes.",
-			position = 20,
+			position = 14,
 			section = notificationSettings
 	)
 	default int lowCastNotificationThreshold() { return AutocastingConstants.DEFAULT_LOW_RUNES_NOTIFICATION_THRESHOLD; }
@@ -220,10 +165,10 @@ public interface AutocastingConfig extends Config
 
 	@ConfigItem(
 			keyName = "notifyOnLowCasts",
-			name = "No Casts Remaining Notification",
+			name = "No Casts Notification",
 			description = "Notifies you when you run out of runes to cast your autocast spell.",
-			position = 21,
+			position = 15,
 			section = notificationSettings
 	)
-	default boolean notifyOnNoCasts() { return true; }
+	default AutocastingConstants.ChatNotificationType notifyOnNoCasts() { return AutocastingConstants.ChatNotificationType.BOTH; }
 }

@@ -27,9 +27,6 @@ public class AutocastingState {
     private AutocastingNotifications notifications;
 
     @Inject
-    private AutocastingMessages messages;
-
-    @Inject
     private SpriteManager spriteManager;
 
     @Getter
@@ -124,7 +121,6 @@ public class AutocastingState {
         if (!autocastSpellUpdate && castsRemaining != newCastsRemaining) {
             // The number updated, so let's go through all the configs and see if we need to send messages/notifications
             notifications.handleCastsUpdated(castsRemaining, newCastsRemaining);
-            messages.handleCastsUpdated(castsRemaining, newCastsRemaining);
         }
         castsRemaining = newCastsRemaining;
     }

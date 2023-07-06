@@ -39,7 +39,7 @@ class AutocastingOverlay extends OverlayPanel
 
         int casts = state.getCastsRemaining();
         boolean displayCasts = config.showCastsRemaining()
-                && casts <= config.castRemainingThreshold()
+                && casts <= config.displayCastLimit()
                 && state.hasActiveAutocast();
 
         TitleComponent textComponent = null;
