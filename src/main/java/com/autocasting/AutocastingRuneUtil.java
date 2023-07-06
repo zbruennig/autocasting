@@ -1,7 +1,7 @@
 package com.autocasting;
 
 import com.autocasting.datatypes.*;
-import lombok.extern.slf4j.Slf4j;
+
 import net.runelite.api.EnumComposition;
 import net.runelite.api.EquipmentInventorySlot;
 import net.runelite.api.Item;
@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import java.util.EnumMap;
 import java.util.Map;
 
-@Slf4j
 public class AutocastingRuneUtil {
     @Inject
     private AutocastingClientData clientData;
@@ -148,7 +147,6 @@ public class AutocastingRuneUtil {
                 return 0;
             }
         }
-        log.info("Casts: " + lowestCasts);
         return lowestCasts;
     }
 }

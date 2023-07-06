@@ -151,6 +151,7 @@ public interface AutocastingConfig extends Config
 	)
 	default boolean messageOnLowCasts() { return true; }
 
+	@Range(min = AutocastingConstants.MINIMUM_CAST_RUNES_THRESHOLD, max = AutocastingConstants.MAXIMUM_CAST_RUNES_THRESHOLD)
 	@ConfigItem(
 			keyName = "lowCastMessageThreshold",
 			name = "Low Cast Threshold",
@@ -206,6 +207,7 @@ public interface AutocastingConfig extends Config
 	)
 	default boolean notifyOnLowCasts() { return true; }
 
+	@Range(min = AutocastingConstants.MINIMUM_CAST_RUNES_THRESHOLD, max = AutocastingConstants.MAXIMUM_CAST_RUNES_THRESHOLD)
 	@ConfigItem(
 			keyName = "lowCastNotificationThreshold",
 			name = "Low Cast Threshold",

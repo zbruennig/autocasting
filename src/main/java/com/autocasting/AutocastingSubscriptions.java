@@ -1,7 +1,7 @@
 package com.autocasting;
 
 import com.autocasting.datatypes.Spell;
-import lombok.extern.slf4j.Slf4j;
+
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Skill;
@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-@Slf4j
 public class AutocastingSubscriptions {
     @Inject
     private Client client;
@@ -88,12 +87,10 @@ public class AutocastingSubscriptions {
     {
         if (event.getContainerId() == InventoryID.EQUIPMENT.getId()) {
             // Equipped items changed; should check to see if an infinite rune item is equipped
-            log.info("Equipment changed!");
             state.updateInfiniteRuneSources();
         }
         if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
             // Inventory changed; should re-count runes
-            log.info("Inventory changed!");
             state.updateRunes();
         }
     }
