@@ -11,9 +11,11 @@ import java.util.List;
 @Singleton
 public class PlayerInventory {
     @Getter
+    @Setter
     private InfiniteRuneItem mainHand;
 
     @Getter
+    @Setter
     private InfiniteRuneItem offHand;
 
     @Getter
@@ -21,6 +23,7 @@ public class PlayerInventory {
     private Pouch pouch;
 
     @Getter
+    @Setter
     private List<RuneItemQuantity> runes;
 
     public PlayerInventory() {
@@ -28,17 +31,6 @@ public class PlayerInventory {
         offHand = null;
         pouch = null;
         runes = new ArrayList<>();
-    }
-
-    public void addInfiniteRuneItem(InfiniteRuneItem item) {
-        switch (item.getSlot()) {
-            case WEAPON:
-                mainHand = item;
-                break;
-            case SHIELD:
-                offHand = item;
-                break;
-        }
     }
 
     public void clearItems() {

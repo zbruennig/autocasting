@@ -74,6 +74,6 @@ public enum InfiniteRuneItem {
     }
 
     public static InfiniteRuneItem getInfiniteRuneItem(int itemId) {
-        return INFINITE_RUNE_ITEM_MAP.get(itemId);
+        return INFINITE_RUNE_ITEM_MAP.getOrDefault(itemId, null);
     }
 }

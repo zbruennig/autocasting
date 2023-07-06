@@ -112,6 +112,6 @@ public enum RuneItem {
     }
 
     public static RuneItem getRuneItem(int itemId) {
-        return RUNE_ITEM_MAP.get(itemId);
+        return RUNE_ITEM_MAP.getOrDefault(itemId, null);
     }
 }

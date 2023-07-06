@@ -131,5 +131,7 @@ public enum Spell
         AUTOCAST_SPELLS_MAP = builder.build();
     }
 
-    public static Spell getSpell(int varbitValue) { return AUTOCAST_SPELLS_MAP.get(varbitValue); }
+    public static Spell getSpell(int varbitValue) {
+        return AUTOCAST_SPELLS_MAP.getOrDefault(varbitValue, null);
+    }
 }

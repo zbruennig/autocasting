@@ -1,6 +1,8 @@
 package com.autocasting;
 
 import com.autocasting.datatypes.PlayerInventory;
+import com.autocasting.datatypes.RuneItem;
+import com.autocasting.datatypes.RuneType;
 import com.autocasting.datatypes.Spell;
 import com.autocasting.dependencies.attackstyles.WeaponType;
 
@@ -12,11 +14,15 @@ import net.runelite.client.game.SpriteManager;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
 @Singleton
 public class AutocastingState {
     @Inject
-    private AutocastingUtil util;
+    private AutocastingClientData clientData;
+
+    @Inject
+    private AutocastingRuneUtil runeUtil;
 
     @Inject
     private SpriteManager spriteManager;
@@ -49,10 +55,18 @@ public class AutocastingState {
     @Setter
     private int lastCombatTick;
 
+    @Getter
+    @Setter
+    private Map<RuneType, Integer> availableRunes;
+
+    @Getter
+    @Setter
+    private int castsRemaining;
+
     public void updateAutocastSpell()
     {
         // Get new autocast spell.
-        Spell newAutocastSpell = util.getAutocastSpell();
+        Spell newAutocastSpell = clientData.getAutocastSpell();
         if (newAutocastSpell == null) { return; }
         // Some input (weapon change, attack style change, or autocast change) happened, so magic level must be fine now
         setMagicLevelTooLowForSpell(false);
@@ -67,37 +81,39 @@ public class AutocastingState {
     /*
     Calculating casts remaining is a 3 stage process, first we check inventory, equipment, and rune pouch for relevant items
     These get set on PlayerInventory. Subscription hooks will call stage 1 methods - updateRunes, updateInfiniteRuneSources
-    At the end of both functions the second stage is called which computes total runes based on all factors. TODO HOW TO STORE???
+    At the end of both functions the second stage is called which computes total runes based on all factors.
     Finally based on current autocast spell and stage 2 results we can math out the number of casts available
     */
 
     public void updateRunes()
     {
-        // TODO Iterate through all the places
+        setPlayerInventory(runeUtil.updateInventory(playerInventory));
         calculateNetRuneTypes();
     }
 
     public void updateInfiniteRuneSources()
     {
-        // TODO Iterate through your equipped
+        setPlayerInventory(runeUtil.updateEquipment(playerInventory));
         calculateNetRuneTypes();
     }
 
     private void calculateNetRuneTypes()
     {
-        // TODO
+        setAvailableRunes(runeUtil.availableRunes(playerInventory));
         updateCastsRemaining();
     }
 
-    private void updateCastsRemaining()
+    public void updateCastsRemaining()
     {
-
+        if (currentAutocastSpell != null && currentAutocastSpell.getVarbitValue() > 0) {
+            castsRemaining = runeUtil.calculateCastsRemaining(currentAutocastSpell, availableRunes);
+            setCastsRemaining(castsRemaining);
+        }
     }
-
 
     public void updateIsEquippedWeaponMagic()
     {
-        int weaponTypeID = util.getWeaponTypeId();
+        int weaponTypeID = clientData.getWeaponTypeId();
         WeaponType newWeaponType = WeaponType.getWeaponType(weaponTypeID);
         if (newWeaponType == currentWeaponType) { return; }
         currentWeaponType = newWeaponType;
@@ -112,8 +128,8 @@ public class AutocastingState {
 
     public void updateCombatStatus()
     {
-        boolean inCombat = util.isInCombat();
-        int currentTick = util.getGameTick();
+        boolean inCombat = clientData.isInCombat();
+        int currentTick = clientData.getGameTick();
         if (inCombat) {
             lastCombatTick = currentTick;
             consideredInCombat = true;

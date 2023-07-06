@@ -32,7 +32,7 @@ public class AutocastingSubscriptions {
     private AutocastingState state;
 
     @Inject
-    private AutocastingUtil util;
+    private AutocastingClientData clientData;
 
     private boolean updateRunesPostClientTick = false;
 
@@ -56,7 +56,7 @@ public class AutocastingSubscriptions {
         }
 
         if (varbitId == AutocastingConstants.VARBIT_FOUNTAIN_OF_RUNES) {
-            state.updateInfiniteRuneSources();
+            state.updateCastsRemaining();
         }
     }
 
@@ -66,7 +66,7 @@ public class AutocastingSubscriptions {
         if (event.getSkill().getName().equals(Skill.MAGIC.getName())) {
             // Now need to check if new boostedLevel is still high enough for the autocast spell
             int boostedLevel = event.getBoostedLevel();
-            int varbitValue = util.getAutocastVarbit();
+            int varbitValue = clientData.getAutocastVarbit();
             Spell autocastSpell = Spell.getSpell(varbitValue);
 
             if (boostedLevel < autocastSpell.getLevelRequirement()) {
@@ -88,13 +88,13 @@ public class AutocastingSubscriptions {
     {
         if (event.getContainerId() == InventoryID.EQUIPMENT.getId()) {
             // Equipped items changed; should check to see if an infinite rune item is equipped
+            log.info("Equipment changed!");
             state.updateInfiniteRuneSources();
-            log.info(event.toString());
         }
         if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
             // Inventory changed; should re-count runes
+            log.info("Inventory changed!");
             state.updateRunes();
-            log.info(event.toString());
         }
     }
 

@@ -1,17 +1,13 @@
 package com.autocasting;
 
 import com.autocasting.datatypes.Spell;
-import net.runelite.api.Actor;
-import net.runelite.api.Client;
-import net.runelite.api.NPC;
-import net.runelite.api.Player;
-import net.runelite.api.Varbits;
+import net.runelite.api.*;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.inject.Inject;
 
-public class AutocastingUtil {
+public class AutocastingClientData {
     @Inject
     private Client client;
 
@@ -46,5 +42,21 @@ public class AutocastingUtil {
     public int getGameTick()
     {
         return client.getTickCount();
+    }
+
+    public EnumComposition getRunepouchEnum() {
+        return client.getEnum(EnumID.RUNEPOUCH_RUNE);
+    }
+
+    public int varbitValue(int varbit) {
+        return client.getVarbitValue(varbit);
+    }
+
+    public ItemContainer getInventory() {
+        return client.getItemContainer(InventoryID.INVENTORY);
+    }
+
+    public ItemContainer getEquipment() {
+        return client.getItemContainer(InventoryID.EQUIPMENT);
     }
 }

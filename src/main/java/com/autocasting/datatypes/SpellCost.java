@@ -10,24 +10,24 @@ import java.util.Map;
 @Getter
 public enum SpellCost {
     WIND_STRIKE(1, new RuneTypeQuantity[] {
-            new RuneTypeQuantity(RuneType.BODY, 1),
+            new RuneTypeQuantity(RuneType.MIND, 1),
             new RuneTypeQuantity(RuneType.AIR, 1)
     }),
 
     WATER_STRIKE(2, new RuneTypeQuantity[] {
-            new RuneTypeQuantity(RuneType.BODY, 1),
+            new RuneTypeQuantity(RuneType.MIND, 1),
             new RuneTypeQuantity(RuneType.WATER, 1),
             new RuneTypeQuantity(RuneType.AIR, 1),
     }),
 
     EARTH_STRIKE(3, new RuneTypeQuantity[] {
-            new RuneTypeQuantity(RuneType.BODY, 1),
+            new RuneTypeQuantity(RuneType.MIND, 1),
             new RuneTypeQuantity(RuneType.EARTH, 2),
             new RuneTypeQuantity(RuneType.AIR, 1),
     }),
 
     FIRE_STRIKE(4, new RuneTypeQuantity[] {
-            new RuneTypeQuantity(RuneType.BODY, 1),
+            new RuneTypeQuantity(RuneType.MIND, 1),
             new RuneTypeQuantity(RuneType.FIRE, 3),
             new RuneTypeQuantity(RuneType.AIR, 2),
     }),
@@ -109,7 +109,7 @@ public enum SpellCost {
 
     MAGIC_DART(18, new RuneTypeQuantity[] {
             new RuneTypeQuantity(RuneType.DEATH, 1),
-            new RuneTypeQuantity(RuneType.BODY, 4),
+            new RuneTypeQuantity(RuneType.MIND, 4),
     }),
 
     CLAWS_OF_GUTHIX(19, new RuneTypeQuantity[] {
@@ -310,6 +310,6 @@ public enum SpellCost {
     }
 
     public static SpellCost getSpellCost(int varbitValue) {
-        return SPELL_COST_MAP.get(varbitValue);
+        return SPELL_COST_MAP.getOrDefault(varbitValue, null);
     }
 }

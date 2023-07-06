@@ -8,6 +8,6 @@ import lombok.Data;
  */
 @Data
 public class RuneItemQuantity {
-    private RuneItem rune;
-    private int quantity;
+    private final RuneItem rune;
+    private final int quantity;
 }

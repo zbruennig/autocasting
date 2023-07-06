@@ -38,6 +38,6 @@ public enum Pouch {
     }
 
     public static Pouch getPouch(int itemId) {
-        return POUCH_MAP.get(itemId);
+        return POUCH_MAP.getOrDefault(itemId, null);
     }
 }
