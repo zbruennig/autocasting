@@ -7,7 +7,8 @@ import lombok.Data;
  * in other words a stack of physical runes
  */
 @Data
-public class RuneItemQuantity {
-    private final RuneItem rune;
-    private final int quantity;
+public class RuneItemQuantity
+{
+	private final RuneItem rune;
+	private final int quantity;
 }

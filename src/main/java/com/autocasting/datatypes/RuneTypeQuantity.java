@@ -7,7 +7,8 @@ import lombok.Data;
  * in other words the amount of a certain rune to cast a spell
  */
 @Data
-public class RuneTypeQuantity {
-    private final RuneType runeType;
-    private final int quantity;
+public class RuneTypeQuantity
+{
+	private final RuneType runeType;
+	private final int quantity;
 }

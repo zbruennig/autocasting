@@ -91,7 +91,7 @@ public enum WeaponType
 	WeaponType(AttackStyle... attackStyles)
 	{
 		Preconditions.checkArgument(attackStyles.length == 4 || attackStyles.length == 6,
-				"WeaponType " + this + " does not have exactly 4 or 6 attack style arguments");
+			"WeaponType " + this + " does not have exactly 4 or 6 attack style arguments");
 		this.attackStyles = attackStyles;
 	}
 

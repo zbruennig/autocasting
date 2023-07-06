@@ -11,20 +11,21 @@ import java.util.Map;
  * as many different item ids can exist for the same rune (e.g. NMZ runes),
  * and a single id can be two runes at once (combo runes)
  */
-public enum RuneType {
-    AIR,
-    WATER,
-    EARTH,
-    FIRE,
-    MIND,
-    BODY,
-    COSMIC,
-    CHAOS,
-    NATURE,
-    LAW,
-    DEATH,
-    ASTRAL,
-    BLOOD,
-    SOUL,
-    WRATH
+public enum RuneType
+{
+	AIR,
+	WATER,
+	EARTH,
+	FIRE,
+	MIND,
+	BODY,
+	COSMIC,
+	CHAOS,
+	NATURE,
+	LAW,
+	DEATH,
+	ASTRAL,
+	BLOOD,
+	SOUL,
+	WRATH
 }

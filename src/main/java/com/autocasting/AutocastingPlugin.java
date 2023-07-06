@@ -18,9 +18,9 @@ TODO: Only show overlay when player is equipping a staff or other autocastable w
 */
 
 @PluginDescriptor(
-		name = "Autocasting",
-		description = "Notifies client when magic level falls below required level for spell.",
-		tags = {"notifier", "notifications", "mage", "magic", "reduced", "reduction", "level", "drain", "autocast", "autocasting", "cast", "utilities"}
+	name = "Autocasting",
+	description = "Notifies client when magic level falls below required level for spell.",
+	tags = {"notifier", "notifications", "mage", "magic", "reduced", "reduction", "level", "drain", "autocast", "autocasting", "cast", "utilities"}
 )
 public class AutocastingPlugin extends Plugin
 {
@@ -51,7 +51,8 @@ public class AutocastingPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		if (!isInitialized) {
+		if (!isInitialized)
+		{
 			eventBus.register(subscriptions);
 			isInitialized = true;
 		}
@@ -62,15 +63,17 @@ public class AutocastingPlugin extends Plugin
 	@Override
 	protected void shutDown() throws Exception
 	{
-  		overlayManager.remove(autocastOverlay);
+		overlayManager.remove(autocastOverlay);
 	}
 
 	private void startPlugin()
 	{
-		if (client.getGameState() == GameState.LOGGED_IN) {
+		if (client.getGameState() == GameState.LOGGED_IN)
+		{
 			state.updateAutocastSpell();
 		}
-		else {
+		else
+		{
 			state.setCurrentAutocastSpell(Spell.NO_SPELL);
 		}
 	}

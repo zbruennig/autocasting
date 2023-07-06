@@ -15,18 +15,18 @@ public interface AutocastingConfig extends Config
 	// OVERLAY
 
 	@ConfigSection(
-			name = "Overlay",
-			description = "Overlay Settings",
-			position = 0
+		name = "Overlay",
+		description = "Overlay Settings",
+		position = 0
 	)
 	String overlaySettings = "overlay";
 
 	@ConfigItem(
-			keyName = "showOverlay",
-			name = "Show Overlay",
-			description = "Show/hide overlay",
-			position = 1,
-			section = overlaySettings
+		keyName = "showOverlay",
+		name = "Show Overlay",
+		description = "Show/hide overlay",
+		position = 1,
+		section = overlaySettings
 	)
 	default boolean showOverlay()
 	{
@@ -34,20 +34,23 @@ public interface AutocastingConfig extends Config
 	}
 
 	@ConfigItem(
-			keyName = "showOverlayOutsideCombat",
-			name = "Show Outside of Combat",
-			description = "Display the autocast overlay panel outside of combat.",
-			position = 2,
-			section = overlaySettings
+		keyName = "showOverlayOutsideCombat",
+		name = "Show Outside of Combat",
+		description = "Display the autocast overlay panel outside of combat.",
+		position = 2,
+		section = overlaySettings
 	)
-	default boolean showOverlayOutsideCombat() { return true; }
+	default boolean showOverlayOutsideCombat()
+	{
+		return true;
+	}
 
 	@ConfigItem(
-			keyName = "showSpellName",
-			name = "Show Spell Name",
-			description = "Show/hide spell name",
-			position = 3,
-			section = overlaySettings
+		keyName = "showSpellName",
+		name = "Show Spell Name",
+		description = "Show/hide spell name",
+		position = 3,
+		section = overlaySettings
 	)
 	default boolean showSpellName()
 	{
@@ -55,41 +58,50 @@ public interface AutocastingConfig extends Config
 	}
 
 	@ConfigItem(
-			keyName = "showSpellIcon",
-			name = "Show Spell Icon",
-			description = "Show/hide spell icon",
-			position = 4,
-			section = overlaySettings
+		keyName = "showSpellIcon",
+		name = "Show Spell Icon",
+		description = "Show/hide spell icon",
+		position = 4,
+		section = overlaySettings
 	)
-	default boolean showSpellIcon() { return true; }
+	default boolean showSpellIcon()
+	{
+		return true;
+	}
 
 	@ConfigItem(
-			keyName = "overlayAlertStyle",
-			name = "Overlay Alert Style",
-			description = "Configures how the overlay behaves when the autocast is unusable.",
-			position = 5,
-			section = overlaySettings
+		keyName = "overlayAlertStyle",
+		name = "Overlay Alert Style",
+		description = "Configures how the overlay behaves when the autocast is unusable.",
+		position = 5,
+		section = overlaySettings
 	)
-	default AutocastingConstants.OverlayNotificationType overlayAlertStyle() { return AutocastingConstants.OverlayNotificationType.FLASH; }
+	default AutocastingConstants.OverlayNotificationType overlayAlertStyle()
+	{
+		return AutocastingConstants.OverlayNotificationType.FLASH;
+	}
 
 
 	@Alpha
 	@ConfigItem(
-			keyName = "overlayAlertColor",
-			name = "Overlay Alert Color",
-			description = "Color of Autocast overlay when flashing/solid",
-			position = 6,
-			section = overlaySettings
+		keyName = "overlayAlertColor",
+		name = "Overlay Alert Color",
+		description = "Color of Autocast overlay when flashing/solid",
+		position = 6,
+		section = overlaySettings
 	)
-	default Color overlayAlertColor() { return AutocastingConstants.RED_FLASH_COLOR; }
+	default Color overlayAlertColor()
+	{
+		return AutocastingConstants.RED_FLASH_COLOR;
+	}
 
 	@Range(min = AutocastingConstants.MINIMUM_COUNTER_FLASH_PERIOD)
 	@ConfigItem(
-			keyName = "flashPeriod",
-			name = "Overlay Flash Period",
-			description = "Period (in frames) at which the Autocast overlay flashes. Lower numbers flash faster.",
-			position = 7,
-			section = overlaySettings
+		keyName = "flashPeriod",
+		name = "Overlay Flash Period",
+		description = "Period (in frames) at which the Autocast overlay flashes. Lower numbers flash faster.",
+		position = 7,
+		section = overlaySettings
 	)
 	default int getFlashPeriod()
 	{
@@ -97,78 +109,99 @@ public interface AutocastingConfig extends Config
 	}
 
 	@ConfigItem(
-			keyName = "showCastsRemaining",
-			name = "Display Casts Remaining",
-			description = "Puts the amount of casts of your autocast spell you have left, based on your current runes.",
-			position = 8,
-			section = overlaySettings
+		keyName = "showCastsRemaining",
+		name = "Display Casts Remaining",
+		description = "Puts the amount of casts of your autocast spell you have left, based on your current runes.",
+		position = 8,
+		section = overlaySettings
 	)
-	default boolean showCastsRemaining() { return true; }
+	default boolean showCastsRemaining()
+	{
+		return true;
+	}
 
 	@Range(min = AutocastingConstants.MINIMUM_CAST_RUNES_THRESHOLD, max = AutocastingConstants.MAXIMUM_CAST_RUNES_THRESHOLD)
 	@ConfigItem(
-			keyName = "castRemainingThreshold",
-			name = "Display Cast Limit",
-			description = "Max amount of remaining casts which will be displayed. (1-999,999)",
-			position = 9,
-			section = overlaySettings
+		keyName = "castRemainingThreshold",
+		name = "Display Cast Limit",
+		description = "Max amount of remaining casts which will be displayed. (1-999,999)",
+		position = 9,
+		section = overlaySettings
 	)
-	default int displayCastLimit() { return AutocastingConstants.DEFAULT_CAST_RUNES_THRESHOLD; }
+	default int displayCastLimit()
+	{
+		return AutocastingConstants.DEFAULT_CAST_RUNES_THRESHOLD;
+	}
 
 
 	// DESKTOP NOTIFICATIONS
 
 	@ConfigSection(
-			name = "Notifications",
-			description = "In-Game and Desktop Notification Settings",
-			position = 10
+		name = "Notifications",
+		description = "In-Game and Desktop Notification Settings",
+		position = 10
 	)
 	String notificationSettings = "notifications";
 
 	@ConfigItem(
-			keyName = "notifyOutOfCombat",
-			name = "Notify Out Of Combat",
-			description = "Controls if notifications for autocast spells will appear outside of combat.",
-			position = 11,
-			section = notificationSettings
+		keyName = "notifyOutOfCombat",
+		name = "Notify Out Of Combat",
+		description = "Controls if notifications for autocast spells will appear outside of combat.",
+		position = 11,
+		section = notificationSettings
 	)
-	default boolean notifyOutOfCombat() { return true; }
+	default boolean notifyOutOfCombat()
+	{
+		return true;
+	}
 
 	@ConfigItem(
-			keyName = "notifyOnStatDrain",
-			name = "Stat Drain Notification",
-			description = "Notifies you when your magic level falls below the level required for your autocast spell.",
-			position = 12,
-			section = notificationSettings
+		keyName = "notifyOnStatDrain",
+		name = "Stat Drain Notification",
+		description = "Notifies you when your magic level falls below the level required for your autocast spell.",
+		position = 12,
+		section = notificationSettings
 	)
-	default AutocastingConstants.ChatNotificationType notifyOnStatDrain() { return AutocastingConstants.ChatNotificationType.BOTH; }
+	default AutocastingConstants.ChatNotificationType notifyOnStatDrain()
+	{
+		return AutocastingConstants.ChatNotificationType.BOTH;
+	}
 
 	@ConfigItem(
-			keyName = "notifyOnLowCasts",
-			name = "Low Casts Notification",
-			description = "Notifies you when your amount of casts falls to or below the Low Cast Threshold.",
-			position = 13,
-			section = notificationSettings
+		keyName = "notifyOnLowCasts",
+		name = "Low Casts Notification",
+		description = "Notifies you when your amount of casts falls to or below the Low Cast Threshold.",
+		position = 13,
+		section = notificationSettings
 	)
-	default AutocastingConstants.ChatNotificationType notifyOnLowCasts() { return AutocastingConstants.ChatNotificationType.BOTH; }
+	default AutocastingConstants.ChatNotificationType notifyOnLowCasts()
+	{
+		return AutocastingConstants.ChatNotificationType.BOTH;
+	}
 
 	@Range(min = AutocastingConstants.MINIMUM_CAST_RUNES_THRESHOLD, max = AutocastingConstants.MAXIMUM_CAST_RUNES_THRESHOLD)
 	@ConfigItem(
-			keyName = "lowCastNotificationThreshold",
-			name = "Low Cast Threshold",
-			description = "Amount of casts to notify you on, based on your current runes.",
-			position = 14,
-			section = notificationSettings
+		keyName = "lowCastNotificationThreshold",
+		name = "Low Cast Threshold",
+		description = "Amount of casts to notify you on, based on your current runes.",
+		position = 14,
+		section = notificationSettings
 	)
-	default int lowCastNotificationThreshold() { return AutocastingConstants.DEFAULT_LOW_RUNES_NOTIFICATION_THRESHOLD; }
+	default int lowCastNotificationThreshold()
+	{
+		return AutocastingConstants.DEFAULT_LOW_RUNES_NOTIFICATION_THRESHOLD;
+	}
 
 
 	@ConfigItem(
-			keyName = "notifyOnLowCasts",
-			name = "No Casts Notification",
-			description = "Notifies you when you run out of runes to cast your autocast spell.",
-			position = 15,
-			section = notificationSettings
+		keyName = "notifyOnLowCasts",
+		name = "No Casts Notification",
+		description = "Notifies you when you run out of runes to cast your autocast spell.",
+		position = 15,
+		section = notificationSettings
 	)
-	default AutocastingConstants.ChatNotificationType notifyOnNoCasts() { return AutocastingConstants.ChatNotificationType.BOTH; }
+	default AutocastingConstants.ChatNotificationType notifyOnNoCasts()
+	{
+		return AutocastingConstants.ChatNotificationType.BOTH;
+	}
 }
