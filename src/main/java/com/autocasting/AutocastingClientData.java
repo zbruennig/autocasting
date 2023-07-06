@@ -27,7 +27,6 @@ public class AutocastingClientData {
     // Based off StatusBarsPlugin.java
     public boolean isInCombat()
     {
-        // TODO some leniency for combat drops, 1 or 2 ticks or so?
         final Player localPlayer = client.getLocalPlayer();
         if (localPlayer == null)
         {

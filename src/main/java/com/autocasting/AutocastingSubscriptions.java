@@ -62,21 +62,7 @@ public class AutocastingSubscriptions {
         if (event.getSkill().getName().equals(Skill.MAGIC.getName())) {
             // Now need to check if new boostedLevel is still high enough for the autocast spell
             int boostedLevel = event.getBoostedLevel();
-            int varbitValue = clientData.getAutocastVarbit();
-
-            // TODO move to state
-            Spell autocastSpell = Spell.getSpell(varbitValue);
-
-            if (boostedLevel < autocastSpell.getLevelRequirement()) {
-                if (!state.isMagicLevelTooLowForSpell()) {
-                    // We don't need to send new messages or update state if it didn't actually change
-                    state.setMagicLevelTooLowForSpell(true);
-                    notifications.notifyStatDrain();
-                }
-            }
-            else {
-                state.setMagicLevelTooLowForSpell(false);
-            }
+            state.updateMagicLevel(boostedLevel);
         }
     }
 

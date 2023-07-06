@@ -119,7 +119,7 @@ public class AutocastingState {
 
         int newCastsRemaining = runeUtil.calculateCastsRemaining(currentAutocastSpell, availableRunes);
         if (!autocastSpellUpdate && castsRemaining != newCastsRemaining) {
-            // The number updated, so let's go through all the configs and see if we need to send messages/notifications
+            // The number updated, so let's go through the configs and see if we need to send notifications
             notifications.handleCastsUpdated(castsRemaining, newCastsRemaining);
         }
         castsRemaining = newCastsRemaining;
@@ -138,6 +138,21 @@ public class AutocastingState {
         // The below types do have a casting option, but do not autocast spells, so leave them out.
         // TYPE_6: These are salamanders. They do not autocast, but give magic xp, so technically have a "casting" option.
         // TYPE_23: Trident, Sanguinesti, etc. Do not have autocast options, so do not show overlay when these are equipped.
+    }
+
+    public void updateMagicLevel(int boostedLevel)
+    {
+        Spell autocastSpell = Spell.getSpell(clientData.getAutocastVarbit());
+
+        if (boostedLevel < autocastSpell.getLevelRequirement()) {
+            // We don't need to send new messages or update state if it didn't actually change
+            if (!magicLevelTooLowForSpell) {
+                magicLevelTooLowForSpell = true;
+                notifications.notifyStatDrain();
+            }
+        } else {
+            magicLevelTooLowForSpell = false;
+        }
     }
 
     public void updateCombatStatus()
