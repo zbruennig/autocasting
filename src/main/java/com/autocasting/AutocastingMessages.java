@@ -29,21 +29,34 @@ public class AutocastingMessages {
         }
     }
 
-    public void sendNoCastsMessage()
+    public void handleCastsUpdated(int previous, int current) {
+        if (current == 0) {
+            if (previous != 0) {
+                sendNoCastsMessage();
+            }
+        }
+        else {
+            int threshold = config.lowCastMessageThreshold();
+            if (previous > threshold && current <= threshold) {
+                sendLowCastsMessage(current);
+            }
+        }
+    }
+
+    private void sendNoCastsMessage()
     {
-        if (config.messageOnStatDrain()) {
+        if (config.messageOnNoCasts()) {
             String autocastName = state.getCurrentAutocastSpell().getName();
             String message = String.format(AutocastingConstants.NO_CASTS_FORMAT, autocastName);
             sendChatMessage(message);
         }
     }
 
-    public void sendLowCastsMessage()
+    private void sendLowCastsMessage(int amount)
     {
-        if (config.messageOnStatDrain()) {
+        if (config.messageOnLowCasts()) {
             String autocastName = state.getCurrentAutocastSpell().getName();
-            String threshold = Integer.toString(config.lowCastMessageThreshold());
-            String message = String.format(AutocastingConstants.LOW_CASTS_FORMAT, threshold, autocastName);
+            String message = String.format(AutocastingConstants.LOW_CASTS_FORMAT, amount, autocastName);
             sendChatMessage(message);
         }
     }

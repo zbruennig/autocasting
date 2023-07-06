@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 class AutocastingOverlay extends OverlayPanel
 {
     private int counter = 0;
-    private final int SPELL_NAME_AND_ICON_GAP = 4;
+    private final int GAP_SIZE = 4;
 
     private final AutocastingPlugin plugin;
     private final AutocastingState state;
@@ -36,82 +36,83 @@ class AutocastingOverlay extends OverlayPanel
         if (!state.isEquippedWeaponMagic()) { return null; }
         if (!config.showOverlay()) { return null; }
         if (!config.showOverlayOutsideCombat() && !state.isConsideredInCombat()) { return null; }
-        else if (!config.showSpellName() && !config.showSpellIcon()) { return null; }
-        else if (config.showSpellName() && config.showSpellIcon())
-        {
-            TitleComponent spellNameComponent = TitleComponent.builder()
-                    .text(getCurrentSpellName())
+
+        int casts = state.getCastsRemaining();
+        boolean displayCasts = config.showCastsRemaining()
+                && casts <= config.castRemainingThreshold()
+                && state.hasActiveAutocast();
+
+        TitleComponent textComponent = null;
+        String textPart = "";
+        if (config.showSpellName() || displayCasts) {
+                        if (config.showSpellName() && displayCasts) {
+                textPart = String.format("%s (%s)", getCurrentSpellName(), casts);
+            } else {  // Exactly 1 of the fields needs to be shown
+                textPart = displayCasts ? Integer.toString(casts) : getCurrentSpellName();
+            }
+            textComponent = TitleComponent.builder()
+                    .text(textPart)
                     .build();
+        }
 
-            ImageComponent spellImageComponent = new ImageComponent(getCurrentSpellImage());
+        ImageComponent imageComponent = null;
+        if (config.showSpellIcon()) {
+            imageComponent = new ImageComponent(getCurrentSpellImage());
+        }
 
-            SplitComponent spellNameIcon = SplitComponent.builder()
-                    .first(spellNameComponent)
-                    .second(spellImageComponent)
+        if (textComponent == null && imageComponent == null) {
+            return null;
+        }
+
+        LayoutableRenderableEntity component;
+        if (textComponent != null && imageComponent != null) {
+            component = SplitComponent.builder()
+                    .first(textComponent)
+                    .second(imageComponent)
                     .orientation(ComponentOrientation.HORIZONTAL)
-                    .gap(new Point(SPELL_NAME_AND_ICON_GAP, 0))
+                    .gap(new Point(GAP_SIZE, 0))
                     .build();
-
-            panelComponent.getChildren().add(
-                    spellNameIcon);
         }
-        else if(config.showSpellName() && !config.showSpellIcon())
-        {
-            TitleComponent spellNameComponent = TitleComponent.builder()
-                    .text(getCurrentSpellName())
-                    .build();
-            panelComponent.getChildren().add(
-                    spellNameComponent);
+        else { // Exactly 1 is nonnull
+            component = (textComponent != null) ? textComponent : imageComponent;
         }
-        else if (!config.showSpellName() && config.showSpellIcon())
-        {
-            ImageComponent spellImageComponent = new ImageComponent(getCurrentSpellImage());
-            panelComponent.getChildren().add(
-                    spellImageComponent);
-        }
-        else { return null; }
-
+        panelComponent.getChildren().add(component);
         panelComponent.setPreferredSize(new Dimension(
-                graphics.getFontMetrics().stringWidth(getCurrentSpellName()) + 10,
-                0));
+                graphics.getFontMetrics().stringWidth(textPart) + 10,
+                0
+        ));
 
-        configureBackground();
-
+        configureBackground(casts);
         return super.render(graphics);
     }
 
-    private void configureBackground()
+    private void configureBackground(int casts)
     {
-        if (config.overlayAlertStyle() == AutocastingConstants.OverlayNotificationType.FLASH)
-        {
-            flashBackground();
+        boolean shouldAlert = state.isMagicLevelTooLowForSpell() || (casts == 0 && state.hasActiveAutocast());
+        if (config.overlayAlertStyle() == AutocastingConstants.OverlayNotificationType.FLASH) {
+            flashBackground(shouldAlert);
         }
-        else
-        {
-            solidBackground();
+        else {
+            solidBackground(shouldAlert);
         }
     }
 
-    private void flashBackground()
+    private void flashBackground(boolean alert)
     {
-        if (state.isMagicLevelTooLowForSpell() && (++counter % config.getFlashPeriod() > config.getFlashPeriod() / 2))
-        {
+        if (alert && (++counter % config.getFlashPeriod() > config.getFlashPeriod() / 2)) {
             panelComponent.setBackgroundColor(config.overlayAlertColor());
         }
-        else
-        {
+        else {
             panelComponent.setBackgroundColor(ComponentConstants.STANDARD_BACKGROUND_COLOR);
         }
     }
 
-    private void solidBackground()
+    private void solidBackground(boolean alert)
     {
-        if (state.isMagicLevelTooLowForSpell() && config.overlayAlertStyle() == AutocastingConstants.OverlayNotificationType.SOLID)
-        {
+        if (alert && config.overlayAlertStyle() == AutocastingConstants.OverlayNotificationType.SOLID) {
             panelComponent.setBackgroundColor(config.overlayAlertColor());
         }
-        else
-        {
+        else {
             panelComponent.setBackgroundColor(ComponentConstants.STANDARD_BACKGROUND_COLOR);
         }
     }

@@ -35,7 +35,7 @@ public final class AutocastingConstants {
     // Message constants
     public static final String STAT_DRAIN_FORMAT = "Your Magic level has dropped too low to autocast %s!";
     public static final String NO_CASTS_FORMAT = "Out of runes to autocast %s!";
-    public static final String LOW_CASTS_FORMAT = "Less than %s casts of %s remaining.";
+    public static final String LOW_CASTS_FORMAT = "%s casts of %s remaining.";
 
     // Other constants
     public static final int OUT_OF_COMBAT_TICK_DELAY = 2;

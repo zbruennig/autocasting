@@ -24,7 +24,21 @@ public class AutocastingNotifications {
         }
     }
 
-    public void notifyNoCasts() {
+    public void handleCastsUpdated(int previous, int current) {
+        if (current == 0) {
+            if (previous != 0) {
+                notifyNoCasts();
+            }
+        }
+        else {
+            int threshold = config.lowCastNotificationThreshold();
+            if (previous > threshold && current <= threshold) {
+                notifyLowCasts(current);
+            }
+        }
+    }
+
+    private void notifyNoCasts() {
         if (config.notifyOnNoCasts()) {
             String autocastName = state.getCurrentAutocastSpell().getName();
             String message = String.format(AutocastingConstants.NO_CASTS_FORMAT, autocastName);
@@ -32,11 +46,10 @@ public class AutocastingNotifications {
         }
     }
 
-    public void notifyLowCasts() {
+    private void notifyLowCasts(int amount) {
         if (config.notifyOnLowCasts()) {
             String autocastName = state.getCurrentAutocastSpell().getName();
-            String threshold = Integer.toString(config.lowCastNotificationThreshold());
-            String message = String.format(AutocastingConstants.LOW_CASTS_FORMAT, threshold, autocastName);
+            String message = String.format(AutocastingConstants.LOW_CASTS_FORMAT, amount, autocastName);
             sendNotification(message);
         }
     }

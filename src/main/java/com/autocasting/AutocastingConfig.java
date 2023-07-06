@@ -87,7 +87,7 @@ public interface AutocastingConfig extends Config
 	@ConfigItem(
 			keyName = "flashPeriod",
 			name = "Overlay Flash Period",
-			description = "Period (in frames) at which the Autocast overlay flashes. Lower numbers flicker faster.",
+			description = "Period (in frames) at which the Autocast overlay flashes. Lower numbers flash faster.",
 			position = 7,
 			section = overlaySettings
 	)
@@ -145,7 +145,7 @@ public interface AutocastingConfig extends Config
 	@ConfigItem(
 			keyName = "messageOnLowCasts",
 			name = "Low Casts Remaining Message",
-			description = "Notifies you when your amount of casts falls below the Low Cast Threshold.",
+			description = "Messages you when your amount of casts falls to or below the Low Cast Threshold.",
 			position = 13,
 			section = messageSettings
 	)
@@ -201,7 +201,7 @@ public interface AutocastingConfig extends Config
 	@ConfigItem(
 			keyName = "notifyOnLowCasts",
 			name = "Low Casts Remaining Notification",
-			description = "Notifies you when your amount of casts falls below the Low Cast Threshold.",
+			description = "Notifies you when your amount of casts falls to or below the Low Cast Threshold.",
 			position = 19,
 			section = notificationSettings
 	)

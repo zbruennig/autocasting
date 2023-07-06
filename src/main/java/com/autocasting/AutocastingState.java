@@ -1,7 +1,6 @@
 package com.autocasting;
 
 import com.autocasting.datatypes.PlayerInventory;
-import com.autocasting.datatypes.RuneItem;
 import com.autocasting.datatypes.RuneType;
 import com.autocasting.datatypes.Spell;
 import com.autocasting.dependencies.attackstyles.WeaponType;
@@ -23,6 +22,12 @@ public class AutocastingState {
 
     @Inject
     private AutocastingRuneUtil runeUtil;
+
+    @Inject
+    private AutocastingNotifications notifications;
+
+    @Inject
+    private AutocastingMessages messages;
 
     @Inject
     private SpriteManager spriteManager;
@@ -75,7 +80,12 @@ public class AutocastingState {
         {
             currentAutocastSpell = newAutocastSpell;
         }
-        updateCastsRemaining();
+        updateCastsRemaining(true);
+    }
+
+    public boolean hasActiveAutocast()
+    {
+        return currentAutocastSpell != null && currentAutocastSpell != Spell.NO_SPELL;
     }
 
     /*
@@ -100,15 +110,23 @@ public class AutocastingState {
     private void calculateNetRuneTypes()
     {
         setAvailableRunes(runeUtil.availableRunes(playerInventory));
-        updateCastsRemaining();
+        updateCastsRemaining(false);
     }
 
-    public void updateCastsRemaining()
+    public void updateCastsRemaining(boolean autocastSpellUpdate)
     {
-        if (currentAutocastSpell != null && currentAutocastSpell.getVarbitValue() > 0) {
-            castsRemaining = runeUtil.calculateCastsRemaining(currentAutocastSpell, availableRunes);
-            setCastsRemaining(castsRemaining);
+        if (currentAutocastSpell == null || currentAutocastSpell == Spell.NO_SPELL) {
+            castsRemaining = 0;
+            return;
         }
+
+        int newCastsRemaining = runeUtil.calculateCastsRemaining(currentAutocastSpell, availableRunes);
+        if (!autocastSpellUpdate && castsRemaining != newCastsRemaining) {
+            // The number updated, so let's go through all the configs and see if we need to send messages/notifications
+            notifications.handleCastsUpdated(castsRemaining, newCastsRemaining);
+            messages.handleCastsUpdated(castsRemaining, newCastsRemaining);
+        }
+        castsRemaining = newCastsRemaining;
     }
 
     public void updateIsEquippedWeaponMagic()

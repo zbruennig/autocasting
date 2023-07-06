@@ -55,7 +55,7 @@ public class AutocastingSubscriptions {
         }
 
         if (varbitId == AutocastingConstants.VARBIT_FOUNTAIN_OF_RUNES) {
-            state.updateCastsRemaining();
+            state.updateCastsRemaining(false);
         }
     }
 
@@ -66,6 +66,8 @@ public class AutocastingSubscriptions {
             // Now need to check if new boostedLevel is still high enough for the autocast spell
             int boostedLevel = event.getBoostedLevel();
             int varbitValue = clientData.getAutocastVarbit();
+
+            // TODO move to state
             Spell autocastSpell = Spell.getSpell(varbitValue);
 
             if (boostedLevel < autocastSpell.getLevelRequirement()) {
