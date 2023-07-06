@@ -16,7 +16,7 @@ public final class AutocastingConstants {
     public static final int DEFAULT_LOW_RUNES_NOTIFICATION_THRESHOLD = 100;
     public static final Color RED_FLASH_COLOR = new Color(255, 0, 0, 186);
 
-    // Common constants
+    // Varbits
     public static final int VARBIT_AUTOCAST_SPELL = 276;
     public static final int VARBIT_FOUNTAIN_OF_RUNES = 4145;
     public static final int[] VARBIT_RUNE_POUCH_RUNES  = {
@@ -36,6 +36,9 @@ public final class AutocastingConstants {
     public static final String STAT_DRAIN_FORMAT = "Your Magic level has dropped too low to autocast %s!";
     public static final String NO_CASTS_FORMAT = "Out of runes to autocast %s!";
     public static final String LOW_CASTS_FORMAT = "Less than %s casts of %s remaining.";
+
+    // Other constants
+    public static final int OUT_OF_COMBAT_TICK_DELAY = 2;
 
     @AllArgsConstructor
     public enum OverlayNotificationType

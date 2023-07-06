@@ -42,7 +42,8 @@ public class PlayerInventory {
     }
 
     public void clearItems() {
-
+        mainHand = null;
+        offHand = null;
     }
 
     public void addRuneStack(RuneItemQuantity runeStack) {

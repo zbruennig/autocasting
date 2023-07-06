@@ -35,7 +35,7 @@ class AutocastingOverlay extends OverlayPanel
     {
         if (!state.isEquippedWeaponMagic()) { return null; }
         if (!config.showOverlay()) { return null; }
-        if (!config.showOverlayOutsideCombat() && !state.isInCombat()) { return null; }
+        if (!config.showOverlayOutsideCombat() && !state.isConsideredInCombat()) { return null; }
         else if (!config.showSpellName() && !config.showSpellIcon()) { return null; }
         else if (config.showSpellName() && config.showSpellIcon())
         {

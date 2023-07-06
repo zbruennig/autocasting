@@ -29,7 +29,7 @@ public class AutocastingUtil {
     }
 
     // Based off StatusBarsPlugin.java
-    public boolean computeIsInCombat()
+    public boolean isInCombat()
     {
         // TODO some leniency for combat drops, 1 or 2 ticks or so?
         final Player localPlayer = client.getLocalPlayer();
@@ -41,5 +41,10 @@ public class AutocastingUtil {
         boolean fightingNPC = interacting instanceof NPC && ArrayUtils.contains(((NPC) interacting).getComposition().getActions(), "Attack");
         boolean fightingPlayer = interacting instanceof Player && client.getVarbitValue(Varbits.PVP_SPEC_ORB) == 1;
         return fightingNPC || fightingPlayer;
+    }
+
+    public int getGameTick()
+    {
+        return client.getTickCount();
     }
 }

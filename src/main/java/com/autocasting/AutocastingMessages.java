@@ -51,7 +51,7 @@ public class AutocastingMessages {
     // Borrowed from DailyTasksPlugin.java
     private void sendChatMessage(String chatMessage)
     {
-        boolean shouldSendMessage = state.isInCombat() || config.messageOutOfCombat();
+        boolean shouldSendMessage = state.isConsideredInCombat() || config.messageOutOfCombat();
         if (!shouldSendMessage) {
             return;
         }

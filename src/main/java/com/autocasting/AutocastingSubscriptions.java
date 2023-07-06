@@ -112,6 +112,6 @@ public class AutocastingSubscriptions {
     public void onGameTick(GameTick gameTick)
     {
         // This only updates every tick, so we shouldn't be re-computing while rendering each frame
-        state.setInCombat(util.computeIsInCombat());
+        state.updateCombatStatus();
     }
 }
