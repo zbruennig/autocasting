@@ -1,6 +1,7 @@
 package com.autocasting;
 
 import com.google.inject.Inject;
+import java.util.Objects;
 import javax.inject.Singleton;
 
 import net.runelite.client.ui.overlay.OverlayPanel;
@@ -51,9 +52,11 @@ class AutocastingOverlay extends OverlayPanel
 			&& casts <= config.displayCastLimit()
 			&& state.hasActiveAutocast();
 
+		String overrideText = getOverrideText(casts);
+
 		TitleComponent textComponent = null;
 		String textPart = "";
-		if (config.showSpellName() || displayCasts)
+		if (config.showSpellName() || displayCasts || overrideText != null)
 		{
 			if (config.showSpellName() && displayCasts)
 			{
@@ -63,6 +66,11 @@ class AutocastingOverlay extends OverlayPanel
 			{  // Exactly 1 of the fields needs to be shown
 				textPart = displayCasts ? Integer.toString(casts) : getCurrentSpellName();
 			}
+
+			if (overrideText != null) {
+				textPart = overrideText;
+			}
+
 			textComponent = TitleComponent.builder()
 				.text(textPart)
 				.build();
@@ -101,6 +109,30 @@ class AutocastingOverlay extends OverlayPanel
 
 		configureBackground(casts);
 		return super.render(graphics);
+	}
+
+	private String getOverrideText(int casts)
+	{
+		if (!config.enableOverrideText()) {
+			return null;
+		}
+
+		if (state.isMagicLevelTooLowForSpell())
+		{
+			String override = config.lowMagicLevelText().strip();
+			if (!override.equals("")) {
+				return override;
+			}
+		}
+
+		if (casts == 0 && state.hasActiveAutocast())
+		{
+			String override = config.noRunesText().strip();
+			if (!override.equals("")) {
+				return override;
+			}
+		}
+		return null;
 	}
 
 	private void configureBackground(int casts)

@@ -70,10 +70,47 @@ public interface AutocastingConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "enableOverrideText",
+		name = "Enable Override Text",
+		description = "Allow custom text to be displayed during alerts.",
+		position = 5,
+		section = overlaySettings
+	)
+	default boolean enableOverrideText()
+	{
+		return true;
+	}
+
+
+	@ConfigItem(
+		keyName = "lowMagicLevelText",
+		name = "Low Magic Level Override Text",
+		description = "Text to override spell name when your magic level drops below the required level. Will not override if left blank.",
+		position = 6,
+		section = overlaySettings
+	)
+	default String lowMagicLevelText()
+	{
+		return "RESTORE";
+	}
+
+	@ConfigItem(
+		keyName = "noRunesText",
+		name = "No Runes Override Text",
+		description = "Text to override spell name when you run out of runes for your autocast. Will not override if left blank.",
+		position = 7,
+		section = overlaySettings
+	)
+	default String noRunesText()
+	{
+		return "NO RUNES";
+	}
+
+	@ConfigItem(
 		keyName = "overlayAlertStyle",
 		name = "Overlay Alert Style",
 		description = "Configures how the overlay behaves when the autocast is unusable.",
-		position = 5,
+		position = 8,
 		section = overlaySettings
 	)
 	default AutocastingConstants.OverlayNotificationType overlayAlertStyle()
@@ -87,7 +124,7 @@ public interface AutocastingConfig extends Config
 		keyName = "overlayAlertColor",
 		name = "Overlay Alert Color",
 		description = "Color of Autocast overlay when flashing/solid",
-		position = 6,
+		position = 9,
 		section = overlaySettings
 	)
 	default Color overlayAlertColor()
@@ -100,7 +137,7 @@ public interface AutocastingConfig extends Config
 		keyName = "flashPeriod",
 		name = "Overlay Flash Period",
 		description = "Period (in frames) at which the Autocast overlay flashes. Lower numbers flash faster.",
-		position = 7,
+		position = 10,
 		section = overlaySettings
 	)
 	default int getFlashPeriod()
@@ -112,7 +149,7 @@ public interface AutocastingConfig extends Config
 		keyName = "showCastsRemaining",
 		name = "Display Casts Remaining",
 		description = "Puts the amount of casts of your autocast spell you have left, based on your current runes.",
-		position = 8,
+		position = 11,
 		section = overlaySettings
 	)
 	default boolean showCastsRemaining()
@@ -125,7 +162,7 @@ public interface AutocastingConfig extends Config
 		keyName = "castRemainingThreshold",
 		name = "Display Cast Limit",
 		description = "Max amount of remaining casts which will be displayed. (1-999,999)",
-		position = 9,
+		position = 12,
 		section = overlaySettings
 	)
 	default int displayCastLimit()
@@ -139,7 +176,7 @@ public interface AutocastingConfig extends Config
 	@ConfigSection(
 		name = "Notifications",
 		description = "In-Game and Desktop Notification Settings",
-		position = 10
+		position = 13
 	)
 	String notificationSettings = "notifications";
 
@@ -147,7 +184,7 @@ public interface AutocastingConfig extends Config
 		keyName = "notifyOutOfCombat",
 		name = "Notify Out Of Combat",
 		description = "Controls if notifications for autocast spells will appear outside of combat.",
-		position = 11,
+		position = 14,
 		section = notificationSettings
 	)
 	default boolean notifyOutOfCombat()
@@ -159,7 +196,7 @@ public interface AutocastingConfig extends Config
 		keyName = "notifyOnStatDrain",
 		name = "Stat Drain Notification",
 		description = "Notifies you when your magic level falls below the level required for your autocast spell.",
-		position = 12,
+		position = 15,
 		section = notificationSettings
 	)
 	default AutocastingConstants.ChatNotificationType notifyOnStatDrain()
@@ -171,7 +208,7 @@ public interface AutocastingConfig extends Config
 		keyName = "notifyOnLowCasts",
 		name = "Low Casts Notification",
 		description = "Notifies you when your amount of casts falls to or below the Low Cast Threshold.",
-		position = 13,
+		position = 16,
 		section = notificationSettings
 	)
 	default AutocastingConstants.ChatNotificationType notifyOnLowCasts()
@@ -184,7 +221,7 @@ public interface AutocastingConfig extends Config
 		keyName = "lowCastNotificationThreshold",
 		name = "Low Cast Threshold",
 		description = "Amount of casts to notify you on, based on your current runes.",
-		position = 14,
+		position = 17,
 		section = notificationSettings
 	)
 	default int lowCastNotificationThreshold()
@@ -197,7 +234,7 @@ public interface AutocastingConfig extends Config
 		keyName = "notifyOnLowCasts",
 		name = "No Casts Notification",
 		description = "Notifies you when you run out of runes to cast your autocast spell.",
-		position = 15,
+		position = 18,
 		section = notificationSettings
 	)
 	default AutocastingConstants.ChatNotificationType notifyOnNoCasts()
